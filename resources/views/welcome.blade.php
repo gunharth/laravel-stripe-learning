@@ -17,7 +17,14 @@
     </head>
     <body>
         <div id="app">
-        <checkout-form :products="{{ $products }}"></checkout-form>
+            <div class="container">
+               {{--  <div class="row">
+                    <checkout-form :products="{{ $products }}"></checkout-form>
+                </div> --}}
+                 <div class="row">
+                    <subscription-form :plans="{{ $plans }}"></subscription-form>
+                </div>
+            </div>
         </div>
         <script src="https://checkout.stripe.com/checkout.js"></script>
         <script src="{{ mix('js/app.js') }}"></script>

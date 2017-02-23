@@ -11198,6 +11198,7 @@ __webpack_require__(31);
  */
 
 Vue.component('CheckoutForm', __webpack_require__(34));
+Vue.component('SubscriptionForm', __webpack_require__(48));
 
 var app = new Vue({
   el: '#app'
@@ -12104,10 +12105,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         buy: function buy() {
+            var product = this.findProductById(this.product);
             this.stripe.open({
-                name: 'My Book',
-                description: 'Some details about the book',
-                amout: 2500
+                name: product.name,
+                description: product.description,
+                amount: product.price
+            });
+        },
+        findProductById: function findProductById(id) {
+            return this.products.find(function (product) {
+                return product.id == id;
             });
         }
     }
@@ -31654,7 +31661,7 @@ var Component = __webpack_require__(35)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Guni/Sites/laravel-stripe/resources/assets/js/components/CheckoutForm.vue"
+Component.options.__file = "/Users/Guni/Sites/laravel-stripe-learning/resources/assets/js/components/CheckoutForm.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] CheckoutForm.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -31665,9 +31672,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-647c87df", Component.options)
+    hotAPI.createRecord("data-v-e10cc948", Component.options)
   } else {
-    hotAPI.reload("data-v-647c87df", Component.options)
+    hotAPI.reload("data-v-e10cc948", Component.options)
   }
 })()}
 
@@ -31819,7 +31826,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-647c87df", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-e10cc948", module.exports)
   }
 }
 
@@ -40434,6 +40441,214 @@ module.exports = function(module) {
 __webpack_require__(10);
 module.exports = __webpack_require__(11);
 
+
+/***/ }),
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(35)(
+  /* script */
+  __webpack_require__(49),
+  /* template */
+  __webpack_require__(50),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/Guni/Sites/laravel-stripe-learning/resources/assets/js/components/SubscriptionForm.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SubscriptionForm.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1897f99a", Component.options)
+  } else {
+    hotAPI.reload("data-v-1897f99a", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    props: ['plans'],
+    data: function data() {
+        return {
+            stripeEmail: '',
+            stripeToken: '',
+            plan: 1
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        this.stripe = StripeCheckout.configure({
+            key: window.Laravel.stripeKey,
+            image: "https://stripe.com/img/documentation/checkout/marketplace.png",
+            locale: "en",
+            currency: "gbp",
+            panelLabel: "Subscribe for",
+            token: function token(_token) {
+                _this.stripeToken = _token.id;
+                _this.stripeEmail = _token.email;
+
+                axios.post('/subscribe', _this.$data).then(function (response) {
+                    return alert('Complete');
+                });
+            }
+
+        });
+    },
+
+    methods: {
+        subscribe: function subscribe() {
+            var plan = this.findPlanById(this.plan);
+            this.stripe.open({
+                name: plan.name,
+                description: plan.name,
+                amount: plan.price
+            });
+        },
+        findPlanById: function findPlanById(id) {
+            return this.plans.find(function (plan) {
+                return plan.id == id;
+            });
+        }
+    }
+};
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('form', {
+    attrs: {
+      "action": "/subscribe",
+      "method": "POST"
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.stripeToken),
+      expression: "stripeToken"
+    }],
+    attrs: {
+      "type": "hidden",
+      "name": "stripeToken"
+    },
+    domProps: {
+      "value": _vm._s(_vm.stripeToken)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.stripeToken = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.stripeEmail),
+      expression: "stripeEmail"
+    }],
+    attrs: {
+      "type": "hidden",
+      "name": "stripeEmail"
+    },
+    domProps: {
+      "value": _vm._s(_vm.stripeEmail)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.stripeEmail = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.plan),
+      expression: "plan"
+    }],
+    attrs: {
+      "name": "plan"
+    },
+    on: {
+      "change": function($event) {
+        _vm.plan = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })[0]
+      }
+    }
+  }, _vm._l((_vm.plans), function(plan) {
+    return _c('option', {
+      domProps: {
+        "value": plan.id
+      }
+    }, [_vm._v("\n            " + _vm._s(plan.name) + " — " + _vm._s(plan.price / 100) + " \n        ")])
+  })), _vm._v(" "), _c('button', {
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.subscribe($event)
+      }
+    }
+  }, [_vm._v("Subscribe")])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1897f99a", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

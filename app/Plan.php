@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Plan extends Model
 {
     protected $casts = [
     	'price' => 'integer'

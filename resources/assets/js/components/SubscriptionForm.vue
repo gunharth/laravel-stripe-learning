@@ -1,27 +1,27 @@
 <template>
-    <form action="/purchases" method="POST">
+    <form action="/subscribe" method="POST">
 
         <input type="hidden" name="stripeToken" v-model="stripeToken">
         <input type="hidden" name="stripeEmail" v-model="stripeEmail">
 
-        <select name="product" v-model="product">
-            <option v-for="product in products" :value="product.id">
-                {{ product.name }} &mdash; {{ product.price / 100 }} 
+        <select name="plan" v-model="plan">
+            <option v-for="plan in plans" :value="plan.id">
+                {{ plan.name }} &mdash; {{ plan.price / 100 }} 
             </option>
         </select>
 
-          <button type="submit" @click.prevent="buy">Buy my book</button>
+          <button type="submit" @click.prevent="subscribe">Subscribe</button>
     </form>
 </template>
 
 <script>
     export default {
-        props: ['products'],
+        props: ['plans'],
         data() {
             return {
                 stripeEmail: '',
                 stripeToken: '',
-                product: 1
+                plan: 1
             };
         },
         created() {
@@ -30,28 +30,29 @@
                 image: "https://stripe.com/img/documentation/checkout/marketplace.png",
                 locale: "en",
                 currency: "gbp",
+                panelLabel: "Subscribe for",
                 token: (token) => {
                     this.stripeToken = token.id;
                     this.stripeEmail = token.email;
                     
-                    axios.post('/purchases', this.$data)
+                    axios.post('/subscribe', this.$data)
                         .then(response => alert('Complete'));
                 }
 
             });
         },
         methods: {
-            buy() {
-                let product = this.findProductById(this.product)
+            subscribe() {
+                let plan = this.findPlanById(this.plan)
                 this.stripe.open({
-                    name: product.name,
-                    description: product.description,
-                    amount: product.price
+                    name: plan.name,
+                    description: plan.name,
+                    amount: plan.price
                 });
             },
 
-            findProductById(id) {
-                return this.products.find(product => product.id == id);
+            findPlanById(id) {
+                return this.plans.find(plan => plan.id == id);
             }
 
         }

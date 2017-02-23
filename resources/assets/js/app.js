@@ -14,6 +14,7 @@ require('./bootstrap');
  */
 
 Vue.component('CheckoutForm', require('./components/CheckoutForm.vue'));
+Vue.component('SubscriptionForm', require('./components/SubscriptionForm.vue'));
 
 const app = new Vue({
     el: '#app'
