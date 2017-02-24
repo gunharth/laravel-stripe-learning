@@ -4,13 +4,15 @@
         <input type="hidden" name="stripeToken" v-model="stripeToken">
         <input type="hidden" name="stripeEmail" v-model="stripeEmail">
 
-        <select name="plan" v-model="plan">
+        <select class="form-control" name="plan" v-model="plan">
             <option v-for="plan in plans" :value="plan.id">
                 {{ plan.name }} &mdash; {{ plan.price / 100 }} 
             </option>
         </select>
 
-          <button type="submit" @click.prevent="subscribe">Subscribe</button>
+          <button type="submit" class="btn btn-default" @click.prevent="subscribe">Subscribe</button>
+
+          <p class="danger" v-show="status" v-text="status">{{ status }}</p>
     </form>
 </template>
 
@@ -21,7 +23,8 @@
             return {
                 stripeEmail: '',
                 stripeToken: '',
-                plan: 1
+                plan: 1,
+                status: false
             };
         },
         created() {
@@ -36,7 +39,10 @@
                     this.stripeEmail = token.email;
                     
                     axios.post('/subscribe', this.$data)
-                        .then(response => alert('Complete'));
+                        .then(
+                            response => alert('Complete'),
+                            response => console.log(response)
+                        );
                 }
 
             });

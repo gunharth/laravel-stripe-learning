@@ -4,13 +4,13 @@
         <input type="hidden" name="stripeToken" v-model="stripeToken">
         <input type="hidden" name="stripeEmail" v-model="stripeEmail">
 
-        <select name="product" v-model="product">
+        <select class="form-control" name="product" v-model="product">
             <option v-for="product in products" :value="product.id">
                 {{ product.name }} &mdash; {{ product.price / 100 }} 
             </option>
         </select>
 
-          <button type="submit" @click.prevent="buy">Buy my book</button>
+          <button type="submit" class="btn btn-default" @click.prevent="buy">Buy</button>
     </form>
 </template>
 
