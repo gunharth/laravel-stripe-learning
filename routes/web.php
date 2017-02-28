@@ -20,3 +20,7 @@ Route::get('/', function () {
 
 Route::post('purchases', 'PurchasesController@store');
 Route::post('subscribe', 'SubscriptionsController@store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

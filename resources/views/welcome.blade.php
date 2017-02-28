@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Stripe Laravel Demos</title>
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <script>
             window.Laravel = {!! json_encode([
@@ -52,30 +52,9 @@
       </div>
     </div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-6">
-          <h2>Products</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <checkout-form :products="{{ $products }}"></checkout-form>
-        </div>
-        <div class="col-md-6">
-          <h2>Subscriptions</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <subscription-form :plans="{{ $plans }}"></subscription-form>
-       </div>
-      </div>
 
-      <hr>
-
-      <footer>
-        <p>&copy; 2016 Company, Inc.</p>
-      </footer>
-    </div> <!-- /container -->
         </div>
 
-        <script src="https://checkout.stripe.com/checkout.js"></script>
-        <script src="{{ mix('js/app.js') }}"></script>
+        
     </body>
 </html>

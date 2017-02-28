@@ -9,10 +9,10 @@
                 {{ plan.name }} &mdash; {{ plan.price / 100 }} 
             </option>
         </select>
+        <button type="submit" class="btn btn-default" @click.prevent="subscribe">Subscribe</button>
 
-          <button type="submit" class="btn btn-default" @click.prevent="subscribe">Subscribe</button>
+        <div class="alert alert-danger" v-show="status" v-text="status"></div>
 
-          <p class="danger" v-show="status" v-text="status">{{ status }}</p>
     </form>
 </template>
 
@@ -34,15 +34,18 @@
                 locale: "en",
                 currency: "gbp",
                 panelLabel: "Subscribe for",
+                email: Laravel.user.email,
                 token: (token) => {
                     this.stripeToken = token.id;
                     this.stripeEmail = token.email;
                     
                     axios.post('/subscribe', this.$data)
                         .then(
-                            response => alert('Complete'),
-                            response => console.log(response)
-                        );
+                            response => alert('Complete')
+                        )
+                        .catch(error => this.status = error.response.data.status);
+
+
                 }
 
             });
