@@ -11,15 +11,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-            'stripeKey' => config('services.stripe.key'),
-            'user' => auth()->user()
-        ]) !!};
+                'csrfToken' => csrf_token(),
+                'stripeKey' => config('services.stripe.key'),
+                'user' => auth()->user()
+            ]) !!};
     </script>
 </head>
 <body>
@@ -85,6 +85,6 @@
 
     <!-- Scripts -->
     <script src="https://checkout.stripe.com/checkout.js"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

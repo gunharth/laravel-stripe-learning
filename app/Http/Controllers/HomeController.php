@@ -28,6 +28,6 @@ class HomeController extends Controller
         $products = Product::all();
         $plans = Plan::all();
 
-        return view('home', compact('products', 'plans'));
+        return view('home', compact('products','plans'));
     }
 }

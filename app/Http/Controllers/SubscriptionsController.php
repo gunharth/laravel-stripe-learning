@@ -4,29 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Stripe\Charge;
-use Stripe\Customer;
-use App\Plan;
+
+use Exception;
+use App\Http\Requests\Subscription;
 
 class SubscriptionsController extends Controller
 {
-    public function store()
+    public function store(Subscription $subscription)
     {
-        // manually refetch plan and price
-        $plan = Plan::findOrFail(request('plan'));
+        try {
+            $subscription->save();
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+                );
+        }
+        
+        // request()->user()->update([
+        // 	'stripe_id' => $customer->id,
+        // 	'stripe_active' => true
+        // ]);
 
-		//set on registration
-		try {
-			$customer = Customer::create([
-			  'email' => request('stripeEmail'),
-			  'source'  => request('stripeToken'),
-			  'plan' => $plan->name
-			]);
-		} catch(\Exception $e) {
-			return response()->json(['status' => $e->getMessage()], 422);
-		}
-		
+        
 
-        return 'all done';
+        return [
+            'status' => 'Success!'
+        ];
     }
 }
